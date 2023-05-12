@@ -17,7 +17,8 @@ public class TgBot : IBot
 
     public void Send(long chatId, string text, Keyboard? keyboard = null, Image[]? images = null)
     {
-        throw new NotImplementedException();
+#warning 
+        _bot.SendTextMessageAsync(chatId, text);
     }
 
     public void DeleteKeyboard(long chatId, string text)
@@ -59,10 +60,5 @@ public class TgBot : IBot
         {
             OnMessageReceived?.Invoke(this, new TgMessage(update.Message));
         }
-
-        //if (update.Type == UpdateType.CallbackQuery)
-        //{
-        //    OnButtonClicked
-        //}
     }
 }
