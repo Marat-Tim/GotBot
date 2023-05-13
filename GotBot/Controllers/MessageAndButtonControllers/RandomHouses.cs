@@ -24,6 +24,10 @@ public class RandomHouses : AliasCommand
         {
             throw new ControllerException("В этом чате нету игры");
         }
+        if (!game.Players.Select(user => user.Id).Contains(update.From.Id))
+        {
+            throw new ControllerException("Вы не являетесь участником игры");
+        }
         game.SendRandomHouses(bot, update.Chat.Id);
     }
 }

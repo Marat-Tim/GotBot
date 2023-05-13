@@ -23,6 +23,10 @@ public class Battle : CommandWithArgs
         {
             throw new ControllerException("В этом чате нету игры");
         }
+        if (!game.Players.Select(user => user.Id).Contains(message.From.Id))
+        {
+            throw new ControllerException("Вы не являетесь участником игры");
+        }
         MentionInfo[] mentions = message.Mentions.ToArray();
         if (mentions.Length != 2)
         {
@@ -36,6 +40,7 @@ public class Battle : CommandWithArgs
         {
             throw new ControllerException("Неправильно указан 2-ой игрок");
         }
+
         bot.ReplyTo(message, "Карты: 0/2");
         bot.Send(mentions[0].User.Id, $"Напишите свою карту для партии номер {game.GameNumber}");
         bot.Send(mentions[1].User.Id, $"Напишите свою карту для партии номер {game.GameNumber}");

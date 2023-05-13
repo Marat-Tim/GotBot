@@ -23,6 +23,10 @@ public class Crow : AliasCommand
         {
             throw new ControllerException("В этом чате нету игры");
         }
+        if (!game.Players.Select(user => user.Id).Contains(update.From.Id))
+        {
+            throw new ControllerException("Вы не являетесь участником игры");
+        }
         new ConfirmationDialogue(bot, update.Chat.Id, game.Players.Select(player => player.Id), game.TrustLevel,
             (bot1, update1) =>
             {

@@ -1,34 +1,13 @@
-﻿#define vk1
-
-using System.Text.Json;
-using BotLibrary;
+﻿using BotLibrary;
 using GotBot;
 using GotBot.Controllers.MessageAndButtonControllers;
 using GotBot.Controllers.MessageControllers;
-using TgBotLibrary;
-using VkBotLibrary;
 
-IBot bot;
+IBot bot = UserInterface.GetBotConfigFromUser();
 
-IGamesManager gamesManager;
+IGamesManager gamesManager = new GamesManager("games.json");
 
-#if vk
-
-bot = new VkBot(Config.VkAccessToken, Config.VkGroupUrl);
-
-gamesManager = new GamesManager("games_vk.json");
-
-#else
-
-bot = new TgBot(Config.TelegramToken);
-
-gamesManager = new GamesManager("games_tg.json");
-
-#endif
-
-bot = new ExceptionsBotDecorator(new TgBot(Config.TelegramToken));
-
-
+bot = new ExceptionsProcessorBotDecorator(bot);
 
 gamesManager.ForEachGameInvoke((chatId, game) =>
 {
@@ -65,28 +44,17 @@ foreach (var messageController in messageControllers)
     bot.OnMessageReceived += messageController.Control;
 }
 
-bot.OnMessageReceived += (bot1, message) =>
-{
-    Console.WriteLine(JsonSerializer.Serialize(message, typeof(object), new JsonSerializerOptions() { WriteIndented = true }));
-};
-
-bot.OnButtonClicked += (bot1, message) =>
-{
-    Console.WriteLine(JsonSerializer.Serialize(message, typeof(object), new JsonSerializerOptions() { WriteIndented = true }));
-};
-
 Console.WriteLine("Бот начал работу");
 
-bot.Start();
-//start:
-//try
-//{
-//    bot.Start();
-//}
-//catch (Exception e)
-//{
-//    Console.WriteLine(e.Message);
-//    Thread.Sleep(10000);
-//    goto start;
+start:
+try
+{
+    bot.Start();
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+    Thread.Sleep(10000);
+    goto start;
 
-//}
+}

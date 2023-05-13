@@ -3,11 +3,11 @@ using GotBot.Controllers;
 
 namespace GotBot;
 
-public class ExceptionsBotDecorator : IBot
+public class ExceptionsProcessorBotDecorator : IBot
 {
     private readonly IBot _bot;
 
-    public ExceptionsBotDecorator(IBot bot)
+    public ExceptionsProcessorBotDecorator(IBot bot)
     {
         _bot = bot;
         _bot.OnMessageReceived += (bot1, message) =>

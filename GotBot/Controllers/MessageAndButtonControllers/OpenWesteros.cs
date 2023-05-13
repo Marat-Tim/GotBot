@@ -23,6 +23,10 @@ public class OpenWesteros : AliasCommand
         {
             throw new ControllerException("В этом чате нет игры");
         }
+        if (!game.Players.Select(user => user.Id).Contains(update.From.Id))
+        {
+            throw new ControllerException("Вы не являетесь участником игры");
+        }
         new ConfirmationDialogue(
             bot, 
             update.Chat.Id,

@@ -5,8 +5,7 @@ namespace GotBot.Controllers.MessageControllers;
 
 public class StartGame : CommandWithArgs
 {
-#warning 
-    private const int PlayersCount = 2;
+    private const int PlayersCount = 6;
 
     private readonly IGamesManager _gamesManager;
 

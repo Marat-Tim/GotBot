@@ -37,12 +37,14 @@ public class TgBot : IBot
         if (images != null)
         {
             List<IAlbumInputMedia> album = new List<IAlbumInputMedia>();
+            int i = 0;
             foreach (var image in images)
             {
                 MemoryStream stream = new MemoryStream();
                 stream.Write(image.Data, 0, image.Data.Length);
                 stream.Position = 0;
-                album.Add(new InputMediaPhoto(InputFile.FromStream(stream, "file.jpg")));
+                album.Add(new InputMediaPhoto(InputFile.FromStream(stream, $"file{i}.jpg")));
+                ++i;
             }
             _bot.SendMediaGroupAsync(chatId, album);
         }

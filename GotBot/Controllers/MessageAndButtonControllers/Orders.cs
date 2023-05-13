@@ -23,6 +23,10 @@ public class Orders : AliasCommand
         {
             throw new ControllerException("В этом чате нету игры");
         }
+        if (!game.Players.Select(user => user.Id).Contains(update.From.Id))
+        {
+            throw new ControllerException("Вы не являетесь участником игры");
+        }
         bot.ReplyTo(update, $"0/{game.Players.Count()}");
         new OrdersWaiter(bot, update.Chat.Id, game).Start();
     }
