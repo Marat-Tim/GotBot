@@ -6,7 +6,7 @@ public static class Keyboards
 {
     public static readonly Keyboard ConfirmOrCancelKeyboard = new KeyboardBuilder()
         .Button("/подтвердить", Color.Positive)
-        .Button("/отмена", Color.Negative)
+        .Button("/отменить", Color.Negative)
         .Build();
 
     public static readonly Keyboard GameKeyboard = new KeyboardBuilder()

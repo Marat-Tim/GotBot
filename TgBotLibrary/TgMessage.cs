@@ -1,4 +1,5 @@
-﻿using BotLibrary;
+﻿using System.Text.Json;
+using BotLibrary;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
@@ -16,7 +17,7 @@ public class TgMessage : IMessage
         {
             foreach (var messageEntity in message.Entities)
             {
-                if (messageEntity.Type == MessageEntityType.Mention)
+                if (messageEntity is { Type: MessageEntityType.TextMention, User: not null })
                 {
                     TgUserInfo user = new TgUserInfo(messageEntity.User!.Id, messageEntity.User.FirstName);
                     mentions.Add(new MentionInfo(user, messageEntity.Offset, messageEntity.Length));
